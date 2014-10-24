@@ -20,7 +20,8 @@ public class q4{
   
 		try {
 			// Read in parse_train.dat; put the lines in an arraylist.
-			String trainingFile = "parse_train.dat";
+			// ** CHANGE TRAINING FILE HERE
+			String trainingFile = "parse_train_vert.dat";
 			System.out.println("Reading in " + trainingFile + "...");
 			ArrayList<JSONArray> lines = readTrainingData(trainingFile);
 			//System.out.println(lines);
@@ -68,7 +69,7 @@ public class q4{
 	}
 	
 	public static void writeReplacements(ArrayList<String> toWrite) throws IOException {
-		PrintWriter writer = new PrintWriter(new File("replacedRare.dat"));
+		PrintWriter writer = new PrintWriter(new File("replacedRareVert.dat"));
 		for (String str : toWrite) {
 			writer.write(str);
 			writer.write('\n');
@@ -104,26 +105,6 @@ public class q4{
 			else {
 				wordFreqs.put(s, 1);
 			}
-			/*// Contains words that have been seen 5 or more times
-			if (commonWords.contains(s)) {
-				break;
-			}
-			// If we have never seen the word
-			if (wordFreqs.get(s) == null) {
-				wordFreqs.put(s,1);
-			}
-			else {
-				int sCount = wordFreqs.get(s);
-				if (sCount > 0 && sCount < 4) {
-					wordFreqs.put(s, sCount+1);
-				}
-				// sCount should never be more than 4
-				else if (sCount >= 4) {
-					// Move the word from rare to common.
-					commonWords.add(s);
-					wordFreqs.remove(s);
-				}
-			}*/
 		}
 		HashSet<String> rareWords = new HashSet<String>();
 		Set<Map.Entry<String, Integer>> allWords = wordFreqs.entrySet();

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class q5 {
+public class q6 {
 	
 	public static HashMap<String, Integer> ruleCounts;
 	// nonterminals in form "nonterminal"
@@ -31,8 +31,8 @@ public class q5 {
 		ArrayList<String> generatedTrees;
 
 		String sentenceFile = "parse_dev.dat";
-		String countsFile = "replacedVert.counts";
-		String outputFile = "parse_trees_vert.dat";
+		String countsFile = "replaced.counts";
+		String outputFile = "parse_trees.dat";
 
 		try {
 			// Read in the cfg.counts file.
@@ -187,15 +187,18 @@ public class q5 {
 							String leftKey = "" + i + " " + s + " " + Y;
 							String rightKey = (s+1) + " " + j + " " + Z;
 							
-							double possibleMaxIJX = computeQ(rule) * piStorage.get(leftKey) * 
-									piStorage.get(rightKey);
+							if (piStorage.get(leftKey) != 0 && piStorage.get(rightKey) != 0) {
+								double possibleMaxIJX = computeQ(rule) * piStorage.get(leftKey) * 
+										piStorage.get(rightKey);
 
-							// Update best IJX
-							if (possibleMaxIJX > maxIJX) {	
-								maxIJX = possibleMaxIJX;
-								maxRule = rule;
-								maxSplit = s;
+								// Update best IJX
+								if (possibleMaxIJX > maxIJX) {	
+									maxIJX = possibleMaxIJX;
+									maxRule = rule;
+									maxSplit = s;
+								}
 							}
+							
 						}
 					}
 					String newKey = i + " " + j + " " + nonterm;
@@ -260,6 +263,7 @@ public class q5 {
 			String bpRule = (String) bpreturn1[0];
 			int bpSplit = (int) bpreturn1[1];
 			String[] bpRuleComps = bpRule.split(" ");
+			String bpSrc = bpRuleComps[0];
 			String bpKey1 = key1Index1 + " " + bpSplit + " " + bpRuleComps[1];
 			String bpKey2 = (bpSplit+1) + " " + key1Index2 + " " + bpRuleComps[2];
 			key1Result = createTree(key1Comp[2], bpKey1, bpKey2, bpStorage, words);
