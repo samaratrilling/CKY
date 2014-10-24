@@ -6,49 +6,34 @@ Time taken to run CKY on question 5 data with improvement:
 353642475340 nanoseconds = 5.89 minutes
 
 Time taken to run CKY on question 6 data with improvement:
-
+2466347300610 ns (41 minutes)
 
 RUN INSTRUCTION
 ----
+EASY VERSION:
+Just run run.bash. :)
+
+It will run q4 on normal training data;
+then q4 on verticalized training data;
+then q5 on normal data
+then q5 on verticalized data
+then q6 on normal data
+then q6 on verticalized data.
+
+--------
+HARD VERSION:
 FOR QUESTION 4:
 
-Run Q4.java.
-By default, it will use training file parse_train.dat.
-If you want to change it to use the verticalized training data,
-change:
-  line 24: String trainingFile = "parse_train.dat" TO
-  line 24: String trainingFile = "parse_train_vert.dat"
-ALSO
-change:
-  line 72: "replacedRare.dat" TO:
-  line 72: "replacedRareVert.dat"
+1. From inside the Q4/ directory:
+Run q4.bash.
 
 FOR QUESTION 5:
-
-Run Q5.java.
-By default, it will use:
-sentence file:  parse_dev.dat
-counts file:  replaced.counts
-output file: parse_trees.dat
-
-replaced.counts is the counts file generated when you run
-count_cfg_freq.py on replacedRare.dat.
-
-If you want to change it to use the verticalized training data,
-change:
- line 34: String countsFile = "replaced.counts" TO
- line 34: String countsFile = "replacedVert.counts"
-AND
- line 35: String outputFile = "parse_trees.dat" TO
- line 35: String outputFile = "parse_trees_vert.dat"
+1. From inside the Q5/ directory:
+Run q5.bash.
 
 FOR QUESTION 6:
-
-Run Q5.java.
-By default, it will use:
-sentence file: parse_dev.dat
-counts file: replaced.counts
-output file: parse_trees.dat
+1. From inside the Q6/ directory:
+Run q6.bash.
 ----------------------------------------------------
 DESIGN:
 For question 6, my optimization was to lower the number of nonterminals

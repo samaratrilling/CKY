@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Scanner;
 
 public class q6 {
 	
@@ -22,6 +23,21 @@ public class q6 {
 	
 	public static void main (String[] args) {
 		
+		String sentenceFile = "parse_dev.dat";
+		String countsFile;
+		String outputFile;
+		
+		countsFile = "replaced.counts";
+		outputFile = "parse_trees.dat";
+		
+		if (args.length > 0) {
+			String mode = args[0];
+			if (mode.equals("vert")) {
+				countsFile = "replacedVert.counts";
+				outputFile = "parse_trees_vert.dat";
+			}
+		}
+		
 		nonterminals = new HashSet<String>();
 		unaryRules = new HashSet<String>();
 		binaryRules = new HashSet<String>();
@@ -30,9 +46,7 @@ public class q6 {
 		ArrayList<String> sentences;
 		ArrayList<String> generatedTrees;
 
-		String sentenceFile = "parse_dev.dat";
-		String countsFile = "replaced.counts";
-		String outputFile = "parse_trees.dat";
+		
 
 		try {
 			// Read in the cfg.counts file.
@@ -237,10 +251,9 @@ public class q6 {
 		
 		String bpKey1 = 1 + " " + bpSplit + " " + bpRuleComps[1];
 		String bpKey2 = (bpSplit+1) + " " + n + " " + bpRuleComps[2];
-		// S, NP 1 8, S 9 13
 		String tree = createTree(src, bpKey1, bpKey2, bpStorage, words);
-		//String tree = createTree("S", "1 8 NP", "9 13 S", bpStorage, words);
 		
+		System.out.println(tree);
 		return tree;		
 	}
 	
@@ -268,7 +281,6 @@ public class q6 {
 			String bpKey2 = (bpSplit+1) + " " + key1Index2 + " " + bpRuleComps[2];
 			key1Result = createTree(key1Comp[2], bpKey1, bpKey2, bpStorage, words);
 		}
-		System.out.println(key1Result);
 		
 		// DEAL WITH KEY2
 		String[] key2Comp = key2.split(" ");
@@ -293,13 +305,9 @@ public class q6 {
 			key2Result = createTree(key2Comp[2], bpKey1, bpKey2, bpStorage, words);
 		}
 		
-		System.out.println(key2Result);
-		
 		// ["source", createTree(, bpStorage)
 			// recursive case = fill the other two parts with calls to createTree
 		String tree = "[\"" + src + "\", " + key1Result + ", " + key2Result + "]";
-		System.out.println(tree);
-
 		return tree;
 	}
 	

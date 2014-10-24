@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.*;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -18,10 +17,22 @@ public class q4{
 
 	public static void main (String args[]) {
   
+		String trainingFile;
+		String outputFile;
+		
+		trainingFile = "parse_train.dat";
+		outputFile = "replacedRare.dat";
+		
+		if (args.length > 0) {
+			String mode = args[0];
+			if (mode.equals("vert")) {
+				trainingFile = "parse_train_vert.dat";
+				outputFile = "replacedRareVert.dat";
+			}
+		}
+		
 		try {
 			// Read in parse_train.dat; put the lines in an arraylist.
-			// ** CHANGE TRAINING FILE HERE
-			String trainingFile = "parse_train_vert.dat";
 			System.out.println("Reading in " + trainingFile + "...");
 			ArrayList<JSONArray> lines = readTrainingData(trainingFile);
 			//System.out.println(lines);
@@ -40,7 +51,7 @@ public class q4{
 		    // try a get call and if it returns null it's not rare.
 		    // If it is rare, replace it with the _RARE_ symbol.
 			// This will output a file named "replacedRare.dat"
-			replaceRareWords(lines, rareWords);
+			replaceRareWords(lines, rareWords, outputFile);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -50,7 +61,7 @@ public class q4{
 		}
 	}
 	
-	public static void replaceRareWords(ArrayList<JSONArray> lines, HashSet<String> rareWords) throws IOException{
+	public static void replaceRareWords(ArrayList<JSONArray> lines, HashSet<String> rareWords, String outputFile) throws IOException{
 		ArrayList<String> toWrite = new ArrayList<String>();
 		
 		for (JSONArray tree : lines) {
@@ -65,11 +76,11 @@ public class q4{
 			}
 			toWrite.add(tree.toString());
 		}
-		writeReplacements(toWrite);
+		writeReplacements(toWrite, outputFile);
 	}
 	
-	public static void writeReplacements(ArrayList<String> toWrite) throws IOException {
-		PrintWriter writer = new PrintWriter(new File("replacedRareVert.dat"));
+	public static void writeReplacements(ArrayList<String> toWrite, String outputFile) throws IOException {
+		PrintWriter writer = new PrintWriter(new File(outputFile));
 		for (String str : toWrite) {
 			writer.write(str);
 			writer.write('\n');
